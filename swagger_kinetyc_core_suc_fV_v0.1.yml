@@ -1,0 +1,2620 @@
+openapi: 3.0.1
+
+info:
+  version: "1.0.0"
+  title: "Kinetyc Api Rest"
+  description: |
+    - Todas las llamadas deben ser sobre HTTPS
+    - Estos servicios se probaran en ambiente QA
+
+  license:
+    name: Apache 2.0 License
+    url: "https://www.apache.org/licenses/LICENSE-2.0"
+
+servers:
+  - url: https://core-svc-qa.somosesencial.cl # QA
+  #- url: https://core-svc.somosesencial.cl # PROD
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Autenticación / Autorización
+    description: Autorización y Autenticación
+  - name: Bonos
+    description: Información de bonos
+  - name: Cuentas Bancarias
+    description: Cuentas Bancarias
+  - name: Contratos y FUN
+    description: Contratos y FUN
+  - name: Excedentes
+    description: Excedentes
+
+paths:
+
+  /KTL_ALI_KTL_FND_JAVA/webresources/authenticate/auth:
+    post:
+      tags:
+        - Autenticación / Autorización
+      summary: Permite obtener un TOKEN JWT para acceder al APIs
+      description: |
+        - Permite obtener un JWT para acceder al API
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: "#/components/schemas/AuthRequest"
+        required: true
+      responses:
+        200:
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthErrorResponse"
+
+  /KTL_PVA_WS/medical-facility/findByFilter:
+    post:
+      tags:
+        - Bonos 
+      summary: findByFilter de bonos
+      description: |
+        - findByFilter de bonos busca centros
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FindByFilterRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/findByFilterResponse"
+        400:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responsefindFilterError"
+
+
+  /KTL_PVA_WS/physician/findByFilter:
+    post:
+      tags:
+        - Bonos 
+      summary: findByFilter physician de bonos
+      description: |
+        - findByFilter physician de bonos busca con filtro
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/physicianFindByFilterRequest"
+        required: true
+      responses:
+        200:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/physicianFindByFilterResponse"
+
+
+  /KTL_ALI_KTL_CLL_JAVA/webresources/ConsultaProductos/catalogoPrestaciones:
+    post:
+      tags:
+        - Bonos 
+      summary: catalogoPrestaciones de bonos
+      description: |
+        - catalogoPrestaciones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/codigoPrestacion"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/codigoPrestacionResponse"
+
+  /KTL_ALI_KTL_CLL_JAVA/webresources/provider-agreement/findByFilter:
+    post:
+      tags:
+        - Bonos
+      summary: findByFilter de proveedores
+      description: |
+        - findByFilter de bonos busca proveedores
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FindByFilterProviderRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FindByFilterProviderResponse"
+
+  /KTL_PVA_WS/xtbml/findTariffsByFilter:
+    get:
+      tags:
+        - Bonos
+      summary: findTariffsByFilter filtra tarifas
+      description: |
+        - findTariffsByFilter filtra tarifas
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/findTariffsByFilter"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/findTariffsByFilterResponse"
+
+  /KTL_ALI_KTL_CLL_JAVA/webresources/imedIntegration/bencertif:
+    post:
+      tags:
+        - Bonos
+      summary: bencertif
+      description: |
+        - bencertif
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/bencertifRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/bencertifResponse"
+
+  /KTL_ALI_KTL_CLL_JAVA/webresources/imedIntegration/valorvari:
+    post:
+      tags:
+        - Bonos
+      summary: valorvari
+      description: |
+        - valorvari
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/valorvariRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/valorvariResponse"
+
+  /KTL_ALI_KTL_CLL_JAVA/webresources/imedIntegration/solicfolios:
+    post:
+      tags:
+        - Bonos
+      summary: Solicitud de Folios
+      description: |
+        - solicfolios
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/solicfoliosRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/solicfoliosResponseOK"
+
+  /KTL_ALI_KTL_CLL_JAVA/webresources/imedIntegration/envbonis:
+    post:
+      tags:
+        - Bonos
+      summary: Envio de bonificacones
+      description: |
+        - Envio para crear una  bonificaciones
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnvbonisRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/envbonisResponseOK"
+
+  /KTL_ALI_KTL_CLL_JAVA/webresources/imedIntegration/valtrans:
+    post:
+      tags:
+        - Bonos
+      summary: valtrans
+      description: |
+        - valtrans
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/valtransRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/valtransResponseOK"
+
+  /KTL_ALI_KTL_CLL_JAVA/webresources/imedIntegration/anulabonou:
+    post:
+      tags:
+        - Bonos
+      summary: Anula Bonos
+      description: |
+        - Anula Bonos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/anulabonouRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/anulabonouResponseOK"
+
+  /KTL_ALI_KTL_ALL_JAVA/webresources/add-bank-account:
+    post:
+      tags:
+        - Cuentas Bancarias
+      summary: Crear cuenta bancaria
+      description: |
+        - Crear cuenta bancaria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createBankRequest"
+        required: true
+      responses:
+        200:
+          description: OK
+        400:
+          description: Error no controlado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/createBankResponseOK"
+
+  /KTL_ALI_KTL_COL_JAVA/webresources/surpluses/{Rut}:
+    get:
+      tags:
+        - Excedentes
+      summary: Excedentes
+      description: |
+        - Excedentes
+      parameters:
+      - $ref: '#/components/parameters/excedentesParameters'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/surplusesResponseOK"
+
+  /KTL_ALI_KTL_ALL_JAVA/webresources/individualAgreementService/getFUN:
+    get:
+      tags:
+        - Contratos y FUN
+      summary: Obtener contratos
+      description: |
+        - Get FUN
+      parameters:
+        - $ref: '#/components/parameters/funParameters'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/funResponse"
+
+  /KTL_ALI_KTL_ALL_JAVA/webresources/health-proposals:
+    post:
+      tags:
+        - Contratos y FUN
+      summary: Crear Propuesta Fun
+      description: |
+        - Crear propuesta de FUN
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/funCreateBodyRequest'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/funCreateResponse"
+        400:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/funCreateResponseError"
+
+components:
+
+  parameters:
+
+    token:
+      description: token para autenticación
+      schema:
+        type: string
+      name: Token auth
+      in: header
+
+    excedentesParameters:
+      description: Rut de abonado
+      schema:
+        type: string
+      name: Rut
+      in: path
+      required: true
+      example: 10337230-5
+
+    funParameters:
+      description: Folio obtenido al crear FUN
+      schema:
+        type: string
+      name: agreementBaseIdentifierAgb
+      in: query
+      required: true
+      example: 1929666
+   
+
+  responses:
+    
+    Unauthorized:
+      description: (Unauthorized) No hay autorización para llamar al servicio
+    
+    NotFound:
+      description: (NotFound) No se encontró información 
+    
+    BadRequest:
+      description: (Bad Request) Los datos enviados son incorrectos o hay datos obligatorios no enviados
+      
+    ServerError:
+      description: Error en servidor
+        
+
+  schemas:
+
+    funCreateBodyRequest:
+      type: object
+      properties:
+        tipoSuscripcion:
+          type: string
+          example: E
+          enum: [E, D]
+          description: tipo Suscripcion puede ser electronica o manual
+        codigoMoneda:
+          type: string
+          example: UF
+          description: codigoMoneda generalmente es UF
+        codigoProducto:
+          type: string
+          example: PRD_HE_PlanSalud
+          description: correspondo al codigo del producto a contratar
+        codigoPlanSalud:
+          type: string
+          example: E9060-0422
+          description: correspondo al codigo del plan a contratar
+        contratante:
+          type: object
+          properties:
+            rut:
+              type: string
+              example: 5096990-8
+              description: rut de contratante
+            primerNombre:
+              type: string
+              example: Test
+              description: primer nombre de contratante
+            segundoNombre:
+              type: string
+              example: Test
+              description: Segundo Nombre de contratante
+            apellidoPaterno:
+              type: string
+              example: Test
+              description: apellido Paterno de contratante
+            apellidoMaterno:
+              type: string
+              example: Test
+              description: Apellido Materno de contratante          
+            razonSocial:
+              type: string
+              example: null
+              description: generalmente null
+            correoElectronico:
+              type: string
+              example: email@domain.com
+              description: email de contratante
+            codigoAreaTelefonoFijo:
+              type: string
+              example: null
+              description: apellido Paterno de contratante
+            numeroTelefonoFijo:
+              type: string
+              example: 991526003
+              description: Numero de teléfono fijo de contratante     
+            codigoAreaTelefonoMovil:
+              type: string
+              example: 9
+              description: codigoAreaTelefonoMovil generalmente 9
+            numeroTelefonoMovil:
+              type: string
+              example: 91523662
+              description: numero Telefono Movil de contratante
+            nombreCalle:
+              type: string
+              example: las delicias
+              description: nombreCalle de direccion de contratante
+            numeroCasa:
+              type: string
+              example: 991
+              description: Numero de casas de contratante  
+            numeroPiso:
+              type: string
+              example: null
+              description: Numero de Piso de contratante
+            numeroUnidadCondominio:
+              type: string
+              example: 23
+              description: Numero de Unidad de Condominio de contratante     
+            nombreEdificio:
+              type: string
+              example: null
+              description: nombreEdificio generalmente null
+            codigoComuna:
+              type: string
+              example: 08415
+              description: codigo de Comuna donde vive de contratante
+            codigoRegion:
+              type: string
+              example: null
+              description: codigoRegion de direccion de contratante
+            addrressStr:
+              type: string
+              example: null
+              description: dirección de contratante
+        aseguradoPrincipalIncluido:
+          type: object
+          properties:
+            rut:
+              type: string
+              example: 5096990-8
+              description: rut de Asegurado Principal
+            primerNombre:
+              type: string
+              example: Test
+              description: primer nombre de Asegurado Principal
+            segundoNombre:
+              type: string
+              example: Test
+              description: Segundo Nombre de Asegurado Principal
+            apellidoPaterno:
+              type: string
+              example: Test
+              description: apellido Paterno de Asegurado Principal
+            genero:
+              type: string
+              example: FEMALE
+              description: genero de Asegurado Principal
+            estadoCivil:
+              type: string
+              example: WIDOWED
+              description: estado Civil de Asegurado Principal
+            fechaNacimiento:
+              type: string
+              example: 25-09-1985
+              description: fecha de Nacimiento de Asegurado Principal
+            peso:
+              type: string
+              example: 56
+              description: Peso de Asegurado Principal
+            estatura:
+              type: string
+              example: 156
+              description: estatura en centimetros
+            sistemaSalud:
+              type: string
+              example: FONASA
+              description: sistema de Salud de Asegurado Principal
+            isapre:
+              type: string
+              example: ""
+              description: isapre de Asegurado Principal
+            ocupacion:
+              type: string
+              example: null
+              description: ocupación de Asegurado Principal
+            enfermedadesIncluidas:
+              type: string
+              example: null
+              description: Enfermedades incluidas de Asegurado Principal
+            actividadesRiesgosasIncluidas:
+              type: string
+              example: null
+              description: actividades Riesgosas Incluidas de Asegurado Principal
+            administradoraFondoPensiones:
+              type: string
+              example: 1003
+              description: Administradora FondoPensiones de Asegurado Principal
+            remuneracionLiquida:
+              type: number
+              example: 2300000
+              description: remuneracion Liquida de Asegurado Principal
+            correoElectronico:
+              type: string
+              example: email@dominio.com
+              description: correoElectronico 
+            codigoAreaTelefonoFijo:
+              type: string
+              example: ""
+              description: codigo Area TelefonoFijo
+            numeroTelefonoFijo:
+              type: string
+              example: 991526003
+              description: numero Telefono Fijo de Asegurado Principal
+            codigoAreaTelefonoMovil:
+              type: string
+              example: 9
+              description: codigo Area Telefono Movil de Asegurado Principal, generalmente 9
+            numeroTelefonoMovil:
+              type: string
+              example: 87666765
+              description: numero Telefono Movil de Asegurado Principal
+            nombreCalle:
+              type: string
+              example: las delicias
+              description: nombre Calle de direccion de Asegurado Principal
+            numeroCasa:
+              type: string
+              example: 11
+              description: numeroCasa de dirección de Asegurado Principal
+            numeroPiso:
+              type: string
+              example: null
+              description: Numero de Piso de Asegurado Principal
+            numeroUnidadCondominio:
+              type: string
+              example: 23
+              description: Numero de Unidad de Condominio de Asegurado Principal     
+            nombreEdificio:
+              type: string
+              example: null
+              description: nombreEdificio generalmente null
+            codigoComuna:
+              type: string
+              example: 08415
+              description: codigo de Comuna donde vive de Asegurado Principal
+            planSalud:
+              type: string
+              example: E9060-0422
+              description: planSalud de direccion de Asegurado Principal
+            relacion:
+              type: string
+              example: OTHER
+              description: relacion de Asegurado Principal
+            nacionalidad:
+              type: string
+              example: Chile
+              description: nacionalidad de Asegurado Principal
+        aseguradosDependientesIncluidos:
+          type: array
+          items:
+            properties:
+              rut:
+                type: string
+                example: 22351635-1
+                description: rut de Asegurado Dependiente
+              primerNombre:
+                type: string
+                example: Jose
+                description: primer nombre de Asegurado Dependiente
+              segundoNombre:
+                type: string
+                example: Miguel
+                description: Segundo Nombre de Asegurado Dependiente
+              apellidoPaterno:
+                type: string
+                example: Cancino
+                description: apellido Paterno de Asegurado Dependiente
+              apellidoMaterno:
+                type: string
+                example: Cancino
+                description: apellido Materno de Asegurado Dependiente
+              genero:
+                type: string
+                example: MALE
+                description: genero de Asegurado Dependiente
+              estadoCivil:
+                type: string
+                example: COMMON_LAW_DEFACTO
+                description: estado Civil de Asegurado Dependiente
+              fechaNacimiento:
+                type: string
+                example: 25-09-2007
+                description: fecha de Nacimiento de Asegurado Dependiente
+              peso:
+                type: string
+                example: 34
+                description: Peso de Asegurado Dependiente
+              estatura:
+                type: string
+                example: 167
+                description: estatura en centimetros
+              enfermedadesIncluidas:
+                type: string
+                example: null
+                description: enfermedades Incluidas de Asegurado Dependiente
+              relacion:
+                type: string
+                example: COUPLE
+                description: relacion de Asegurado Dependiente
+              tipoAsegurado:
+                type: string
+                example: ADDITIONAL
+                description: tipoAsegurado de Asegurado Dependiente
+        intermediariosIncluidos:
+          type: array
+          items:
+            properties:
+              rut:
+                type: string
+                example: 22351635-1
+                description: rut de intermediario
+              primerNombre:
+                type: string
+                example: Jose
+                description: primer nombre de intermediario
+              segundoNombre:
+                type: string
+                example: Miguel
+                description: Segundo Nombre de intermediario
+              apellidoPaterno:
+                type: string
+                example: Cancino
+                description: apellido Paterno de intermediario
+              apellidoMaterno:
+                type: string
+                example: Cancino
+                description: apellido Materno de intermediario
+              razonSocial:
+                type: string
+                example: null
+                description: razonSocial de intermediario
+        coberturasIncluidas:
+          type: array
+          items:
+            $ref: "#/components/schemas/coberturasIncluidas"
+          example:
+              - codigo: "HEC_HE_CAEC"
+                montoAsegurado: null
+                porcentaje: null
+                codigoDeducible: null
+                montoDeducible: 0
+                montoPrimaBruto: 0
+                montoPrimaNeta: 0
+                montoPrimaBasica: 0
+                tasaPrima: null
+                beneficioValorDuracion: 0
+                beneficioUnidadDuracion: "Año"
+                beneficioEdad: null
+                tipoPlan: null
+                aseguradoDependiente: ["22351635-1"]
+
+              - codigo: "HEC_HE_CAEC"
+                montoAsegurado: null
+                porcentaje: null
+                codigoDeducible: null
+                montoDeducible: 0
+                montoPrimaBruto: 0
+                montoPrimaNeta: 0
+                montoPrimaBasica: 0
+                tasaPrima: null
+                beneficioValorDuracion: 0
+                beneficioUnidadDuracion: "Año"
+                beneficioEdad: null
+                tipoPlan: null
+                aseguradoDependiente: ["22351635-1"]
+
+              - codigo: "HEC_HE_CAEC"
+                montoAsegurado: null
+                porcentaje: null
+                codigoDeducible: null
+                montoDeducible: 0
+                montoPrimaBruto: 0
+                montoPrimaNeta: 0
+                montoPrimaBasica: 0
+                tasaPrima: null
+                beneficioValorDuracion: 0
+                beneficioUnidadDuracion: "Año"
+                beneficioEdad: null
+                tipoPlan: null
+                aseguradoDependiente: ["22351635-1"] 
+
+        opcionesFinanciamientoIncluidas:
+          type: array
+          items:
+            properties:
+              metodoPago:
+                type: string
+                example: DPP
+                description: metodoPago
+              metodoPagoCliente:
+                type: string
+                example: null
+                description: metodoPagoCliente
+              metodoFacturacion:
+                type: string
+                example: DPP
+                description: metodoFacturacion
+              tipoTrabajador:
+                type: string
+                enum: [D, I, P]
+                example: D
+                description: tipoTrabajador
+              frecuenciaPago:
+                type: string
+                example: MONTH_OR_MONTHLY
+                description: frecuenciaPago
+              montoBruto:
+                type: integer
+                example: 2
+                description: montoBruto
+              mandatoPACIncluido:
+                type: string
+                example: null
+                description: mandatoPACIncluido
+              mandatoPATIncluido:
+                type: string
+                example: null
+                description: mandatoPATIncluido
+              fechaPrimerPago:
+                type: string
+                example: 03-10-2023
+                format: date
+                description: fechaPrimerPago
+              diaPago:
+                type: number
+                example: 10
+                description: diaPago
+              mandatoDPPIncluido:
+                type: object
+                items:
+                  properties:
+                    rutConvenio:
+                      type: string
+                      example: 96936100-0
+                      description: rutConvenio
+                    numeroConvenio:
+                      type: string
+                      example: 2388
+                      description: numeroConvenio
+              pagador:
+                type: string
+                example: null
+                description: pagador
+              folioFUN:
+                type: string
+                example: null
+                description: folioFUN
+              empleadores:
+                type: array
+                items:
+                  properties:
+                    rut:
+                      type: string
+                      example: 96936100-0
+                      description: rutConvenio
+              dpsData:
+                type: string
+                example: null
+                description: dpsData
+
+    coberturasIncluidas:
+      type: array
+      items:
+        properties:
+          codigo:
+            type: string
+            example: HEC_HE_PlanBase
+            description: codigo
+          montoAsegurado:
+            type: string
+            example: null
+            description: montoAsegurado
+          porcentaje:
+            type: string
+            example: null
+            description: porcentaje
+          codigoDeducible:
+            type: string
+            example: null
+            description: codigoDeducible
+          montoDeducible:
+            type: number
+            example: 0
+            description: montoDeducible
+          montoPrimaBruto:
+            type: number
+            example: 0
+            description: montoPrimaBruto
+          montoPrimaNeta:
+            type: number
+            example: 0
+            description: montoPrimaNeta
+          montoPrimaBasica:
+            type: number
+            example: 0
+            description: montoPrimaBasica
+          tasaPrima:
+            type: string
+            example: null
+            description: tasaPrima
+          beneficioValorDuracion:
+            type: number
+            example: 0
+            description: beneficioValorDuracion
+          beneficioUnidadDuracion:
+            type: string
+            example: Año
+            description: beneficioUnidadDuracion
+          beneficioEdad:
+            type: string
+            example: null
+            description: beneficioEdad
+          tipoPlan:
+            type: string
+            example: null
+            description: tipoPlan
+          aseguradoDependiente:
+            type: string
+            example: ["22351635-1"]
+
+    funCreateResponse:
+      type: object
+      properties:
+        warnings:
+          type: array
+          example: []
+          items:
+            type: string
+        data:
+          type: object
+          properties:
+            numeroPoliza:
+              type: string
+              example: null
+              description: Numero de poliza generalmente null
+            version:
+              type: number
+              format: integer
+              example: 1
+              description: version
+            identificador:
+              type: number
+              format: integer
+              example: 57334
+              description: identificador
+            nombreReferencia:
+              type: string
+              example: IndividualAgreement
+              description: Este valor no varia
+
+    funCreateResponseError:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: object
+            properties:
+              codigo:
+                type: string
+                example: ventascas.propuesta.duplicated.rut.in.system.proposal
+              descripcion:
+                type: string
+                example: El rut 15097283-3 existe en la propuesta número 1942248.
+        warnings:
+          type: string
+          example: null
+          description: warnings
+        tipoRespuesta:
+          type: string
+          example: error
+          description: tipo de respuesta puede ser tipo error
+        data:
+          type: string
+          example: null
+          description: En error es generalmente null
+
+    funResponse:
+      type: object
+      properties:
+        valido:
+          type: boolean
+          example: true
+          description: true si es valido false si no
+        codigo:
+          type: integer
+          example: 1
+          description: código
+        mensaje:
+          type: string
+          example: El registro se creó correctamente.
+          description: mensaje de proceso.
+        totalRegistros:
+          type: integer
+          example: 1
+          description: total de registros respondidos.
+
+        datos:
+          type: array
+          description: data en formato array de objetos
+          items:
+            $ref: "#/components/schemas/ContratoRespose"  
+        data:
+          type: string
+          example: null
+          description: datos en formato array de objetos
+        accessInfo:
+          type: object
+          example: null
+          description: accessInfo generalmente no trae información
+
+    ContratoRespose:
+      type: object
+      properties:
+        folio:
+          type: string
+          example: 9899988
+          description: folio de contrato
+        representanteIsapre:
+          type: string
+          example: Claudia Paredes Peña
+          description: Nombre de representante de Isapre
+        seccionAFUN:
+          type: object
+          properties:
+            numerocontrato:
+              type: string
+              example: 100001
+              description: Número de contrato
+            versionContrato:
+              type: string
+              example: 1
+              description: Versión de contrato
+            tipoDeNotificacion:
+              type: string
+              example: 1
+              description: Tipo de Notificación
+            tipoDeCotizante:
+              type: string
+              example: 1
+              description: Número de contrato
+            codigoIsapre:
+              type: string
+              example: 108
+              description: codigoIsapre
+            numeroEndoso:
+              type: string
+              example: null
+              description: numero Endoso generalmente se envia null
+            idContrato:
+              type: string
+              example: 660
+              description: idContrato
+        seccionBFUN:
+          type: object
+          properties:
+            rutCotizante:
+              type: string
+              example: 22222222
+              description: Rut del cotizante
+            dvCotizante:
+              type: string
+              example: 2
+              description: Digito verificador del Rut del cotizante
+            apellidoPaterno:
+              type: string
+              example: Fries
+              description: Apellido paterno del cotizante
+            apellidoMaterno:
+              type: string
+              example: Fress
+              description: Apellido materno del cotizante
+            nombres:
+              type: string
+              example: Jose Jose
+              description: Nombre del cotizante
+            correoElectronico:
+              type: string
+              example: email@dominio.com
+              description: Email del cotizante
+            calle:
+              type: string
+              example: Delicias
+              description: Calle de direccion de contratante
+            numero:
+              type: string
+              example: 2
+              description: Número de casa de direccion de contratante
+            depto:
+              type: string
+              example: 1212
+              description: Número de depto de direccion de contratante
+            comuna:
+              type: string
+              example: Antofagasta
+              description: Comuna de contratante
+            ciudad:
+              type: string
+              example: Antofagasta
+              description: Ciudad de contratante
+            region:
+              type: string
+              example: Antofagasta
+              description: region de contratante
+            telefonoFijo:
+              type: string
+              example: null
+              description: Teléfono fijo del cotizante
+            telefonoCelular:
+              type: string
+              example: email@dominio.com
+              description: Celular del cotizante
+            casilla:
+              type: string
+              example: null
+              description: casilla
+            fechaNacimientoD:
+              type: string
+              example: 02
+              description: Dia de fecha de nacimiento de contratante
+            fechaNacimientoM:
+              type: string
+              example: 03
+              description: Mes de fecha de nacimiento de contratante
+            fechaNacimientoA:
+              type: string
+              example: 2000
+              description: Anio de fecha de nacimiento de contratante
+            tiopoDeTrabajador:
+              type: string
+              example: D
+              description: Tipo de trabajador puede ser dependiente, independiente, pensionado
+            sexo:
+              type: string
+              example: Masculino
+              description: sexo de contratante
+            institucionAnterior:
+              type: string
+              example: null
+              description: institucion Anterior de contratante
+            isapre:
+              type: string
+              example: Fonasa
+              description: Isapre anterior de contratante
+            afp:
+              type: string
+              example: Habitad
+              description: afp de contratante
+            totalBeneficiarios:
+              type: integer
+              example: 1
+              description: cantidad de beneficiarios del cotizante
+            seccionBBeneficiariosFUNList:
+              type: array
+              example: []
+              items:
+                type: object
+              description: generalmente vacio
+        seccionCFUN:
+          type: object
+          properties:
+            razonSocial:
+              type: string
+              example: Jxjshnfq
+              description: razonSocial
+            rutPagador:
+              type: string
+              example: 96936100
+              description: rutPagador
+            dvPagador:
+              type: string
+              example: 0
+              description: digito verificador
+            calle:
+              type: string
+              example: Lo Arcaya
+              description: calle
+            numero:
+              type: string
+              example: 1705
+              description: numero
+            depto:
+              type: string
+              example: 2
+              description: depto
+            comuna:
+              type: string
+              example: Vitacura
+              description: comuna
+            ciudad:
+              type: string
+              example: Santiago
+              description: ciudad
+            region:
+              type: string
+              example: Región Metropolitana de Santiago
+              description: region
+            telefonoFijo:
+              type: string
+              example: 65222101217
+              description: telefonoFijo
+            telefonoCelular:
+              type: string
+              example: null
+              description: telefonoCelular
+            numeroPagadores:
+              type: number
+              example: 1
+              description: cantidad de pagadores
+            modificacion:
+              type: string
+              example: A
+              description: modificacion
+            correoElectronico:
+              type: string
+              example: notificacionlaboral@somosesencial.cl
+              description: correoElectronico
+
+        seccionDFUN:
+          type: object
+          properties:
+            totalCotizacionPactada:
+              type: number
+              format: float
+              example: 6.21
+              description: totalCotizacionPactada
+            cotizacionOtrosEmpleadores:
+              type: number
+              format: float
+              example: 1.21
+              description: cotizacionOtrosEmpleadores
+            cotizacionTotalAPagar:
+              type: number
+              format: float
+              example: 5.0
+              description: cotizacionTotalAPagar
+            precioPlan:
+              type: number
+              format: float
+              example: 6.2
+              description: precioPlan
+            factorGrupoFamiliar:
+              type: number
+              format: float
+              example: 0.9
+              description: factorGrupoFamiliar
+            precioGes:
+              type: number
+              format: float
+              example: 0.63
+              description: precioGes
+            precioCae:
+              type: number
+              format: float
+              example: 0.0
+              description: precioCae
+            cotizacionADescontarMes:
+              type: string
+              example: 2
+              description: cotizacionADescontarMes
+            cotizacionADescontar:
+              type: string
+              example: 2022
+              description: cotizacionADescontar
+            inicioVigenciaMes:
+              type: string
+              example: 03
+              description: inicioVigenciaMes
+            inicioVigencia:
+              type: string
+              example: 2022
+              description: inicioVigencia
+            tipoPlan:
+              type: string
+              example: I
+              description: tipoPlan
+            anualidadMes:
+              type: string
+              example: 03
+              description: anualidadMes
+            renunciaExcedentes:
+              type: string
+              example: 2
+              description: renunciaExcedentes
+            rentaImponible:
+              type: string
+              example: 1500000
+              description: rentaImponible
+            codigoPlan:
+              type: string
+              example: FUNDAMENTAL
+              description: codigoPlan
+            identificacionPlan:
+              type: string
+              example: Fundamental Plus Prime
+              description: identificacionPlan
+            equivalenciaPesos:
+              type: number
+              example: 222557
+              description: equivalenciaPesos
+            precioPlanComplementario:
+              type: number
+              format: float
+              example: 5.58
+              description: precioPlanComplementario
+            listarutOtrosEmpleadores:
+              type: string
+              example: null
+              description: listarutOtrosEmpleadores
+
+        seccionEFUN:
+          type: object
+          properties:
+            nombreAgente:
+              type: string
+              example: Jxjshnfq
+              description: nombreAgente
+            rutAgente:
+              type: string
+              example: 11111111
+              description: rutAgente
+            rutAgenteDv:
+              type: string
+              example: 1
+              description: digito verificador
+            fechaFirmaFunD:
+              type: string
+              example: null
+              description: fechaFirmaFunD
+            fechaFirmaFunM:
+              type: string
+              example: null
+              description: fechaFirmaFunM
+            fechaFirmaFunA:
+              type: string
+              example: null
+              description: fechaFirmaFunA
+
+
+
+    surplusesResponseOK:
+      type: object
+      properties:
+        valido:
+          type: boolean
+          example: true
+          description: true, generalmente es true
+        codigo:
+          type: integer
+          example: 1
+          description: código casi siempre es 1
+        mensaje:
+          type: string
+          example: El registro se creó correctamente.
+          description: mensaje de proceso.
+        totalRegistros:
+          type: integer
+          example: 1
+          description: Total de registros
+        datos:
+          type: string
+          example: null
+          description: datos en formato array de objetos
+        data:
+          type: object
+          description: array de data en formato JSON
+          properties:
+            rut:
+              type: string
+              example: 10337230-5
+              description: rut del afiliado/titular
+            nombres:
+              type: string
+              example: Wtxf Nwjsj
+              description: Nombres del afiliado/titular
+            apellidoPaterno:
+              type: string
+              example: Gqfsht
+              description: Apellido Paterno del afiliado/titular
+            apellidoMaterno:
+              type: string
+              example: Ufwwf
+              description: Apellido Materno del afiliado/titular
+            telefonoCelular:
+              type: string
+              example: 569956896297
+              description: Teléfono Celular del afiliado/titular
+            saldoDisponible:
+              type: number
+              format: float
+              example: 0.0
+              description: Saldo disponible float (example 0.0 )
+        accessInfo:
+          type: object
+          description: accessInfo generalmente no trae información, aca trae esta info, no considerar
+          properties:
+            serverHostName:
+              type: string
+              example: null
+              description: serverHostName
+            serverAddress:
+              type: string
+              example: core-svc-qa.somosesencial.cl
+              description: Direccion de servidor
+            clientAddress:
+              type: string
+              example: null
+              description: clientAddress
+            clientHostName:
+              type: string
+              example: null
+              description: clientHostName
+            userInfo:
+              type: string
+              example: null
+              description: userInfo
+
+    envbonisResponseOK:
+      type: object
+      description: Objeto de respuesta de envbonis.
+
+      properties:
+        CodRespuesta:
+          type: string
+          example: N
+          description: Código de respuesto
+        MensajeError:
+          type: string
+          example: ERROR AL ENVIAR BONIFICACION For input string RutConvenio
+          description: Mensaje de error.
+
+    EnvbonisRequest:
+      description: Objeto de envio de envbonis
+      type: object
+      properties:
+        CodFinanciador:
+          type: string
+          example: 108
+          description: Codigo de financiador.
+        HomNumeroConvenio:
+          type: string
+          example: homNumeroConvenio
+        HomLugarConvenio:
+          type: string
+          example: HomLugarConvenio
+          description: Lugar de convenio.
+        SucVenta:
+          type: string
+          example: sucVenta
+          description: Sucursal de venta.
+        RutConvenio:
+          type: string
+          example: RutConvenio
+          description: Rut de convenio.
+        RutAsociado:
+          type: string
+          example: RutAsociado
+          description: Rut de asociado.
+        NomPrestador:
+          type: string
+          example: NomPrestador
+          description: Nombre del prestador.
+        RutTratante:
+          type: string
+          example: RutTratante
+          description: Rut del tratante.
+        Especialidad:
+          type: string
+          example: especialidad
+          description: Nombre de especialidad.
+        RutBeneficiario:
+          type: string
+          example: 21814546-9
+          description: Rut del beneficiario.
+        RutCotizante:
+          type: string
+          example: RutCotizante
+          description: Rut de cotizante.
+        RutAcompanante:
+          type: string
+          example: RutAcompanante
+          description: Rut de acompanante.
+        RutEmisor:
+          type: string
+          example: RutEmisor
+          description: Rut de emisor.
+        RutCajero:
+          type: string
+          example: RutCajero
+          description: Rut de cajero.
+        CodigoDiagnostico:
+          type: string
+          example: CodigoDiagnostico
+          description: Codigo de diagnostico.
+        DescuentoxPlanilla:
+          type: string
+          example: descuentoxPlanilla
+          description: Descuento por Planilla.
+        MontoExcedente:
+          type: string
+          example: montoExcedente
+          description: Monto de execedentes.
+        FechaEmision:
+          type: string
+          example: 20220314
+          description: Fecha de emision
+        NivelConvenio:
+          type: string
+          example: nivelConvenio
+          description: Nivel de convenio.
+        FolioFinanciador:
+          type: string
+          example: 69616
+          description: Folio de financiador.
+        MontoValorTotal:
+          type: string
+          example: montoValorTotal
+          description: Monto Valor total.
+        MontoAporteTotal:
+          type: string
+          example: montoAporteTotal
+          description: Monto de aporte total.
+        MontoCopagoTotal:
+          type: string
+          example: montoCopagoTotal
+          description: Monto copago total.
+        NumOperacion:
+          type: string
+          example: numOperacion
+          description: Número de operación.
+        CorrPrestacion:
+          type: string
+          example: corrPrestacion
+          description: Correlativo de prestación.
+        TipoSolicitud:
+          type: string
+          example: tipoSolicitud
+          description: Tipo de solicitud.
+        FechaInicio:
+          type: string
+          example: fechaInicio
+          description: Fecha de inicio.
+        Urgencia:
+          type: boolean
+          example: false
+          description: Indica si es por urgencia con valor true.
+        Plan:
+          type: string
+          example: plan
+          description: Plan de salid.
+        Prestaciones:
+          description: Prestaciones
+          type: array
+          items:
+            properties:
+              Prestacion:
+                type: string
+                example: 0702102
+                description: Preatación.
+              Item:
+                type: string
+                example: item
+                description: Item.
+              CodigoAdicional:
+                type: string
+                example: codigoAdicional
+                description: Código adicional
+              RecargoHora:
+                type: string
+                example: recargoHora
+                description: Recargo de hora.
+              Cantidad:
+                type: integer
+                example: 2
+                description: Cantidad
+              Total:
+                type: integer
+                example: 60000
+                description: Total.
+              ValorPrestacion:
+                type: integer
+                example: 30000
+                description: Valor prestación.
+              AporteFinanciador:
+                type: integer
+                example: 25000
+                description: Aporte Financiador.
+              Copago:
+                type: integer
+                example: 35000
+                description: Copago.
+              InternoIsa:
+                type: string
+                example: internoIsa
+                description: InternoIsa.
+              BonificacionAdicional:
+                type: array
+                description: Bonificación Adicional.
+                items:
+                  type: object
+
+    codigoPrestacion:
+      type: object
+      description: codigoPrestacion.  
+      properties:
+        codigoPrestacion:
+          type: string
+          example: ""
+          description: Codigo de prestación.
+  
+    findByFilterResponse:
+      type: object
+      description: findByFilterResponse.
+      properties:
+        valido:
+          type: boolean
+          example: true
+          description: true si es valido false si no
+        codigo:
+          type: integer
+          example: 1
+          description: código
+        mensaje:
+          type: string
+          example: "ok"
+          description: mensaje de proceso.
+
+        totalRegistros:
+          type: integer
+          example: 2
+          description: Cantidad de registros
+        datos:
+          type: array
+          description: "Arreglo con instituciones"
+          items:
+            $ref: "#/components/schemas/medicalFacility"
+          example:
+            data:
+              - internalRolId: 1079170
+                rut: "99537800-0"
+                razonSocial: "CLINICA PORTADA SPA"
+                luat: "133"
+                tipoEstablecimiento: "Close_HealthCare"
+                numRegistro: "61"
+                vigenciaInicial: "08-05-2023 00:00:00"
+                vigenciaFinal: "31-12-2050 23:59:59"
+                pais: "Chile"
+                region: "Antofagasta"
+                ciudad: "Antofagasta"
+                comuna: "Antofagasta"
+                nombreCalle: "Av. Balmaceda"
+                numeroCalle: "2648"
+                numeroBlock: "2"
+                prestadoresAsociados: null
+            
+              - internalRolId: 102454
+                rut: "99537800-0"
+                razonSocial: "HQNSNHF UTWYFIF XUF"
+                luat: "999"
+                tipoEstablecimiento: "Close_HealthCare"
+                numRegistro: "61"
+                vigenciaInicial: "01-04-2022 00:00:00"
+                vigenciaFinal: "01-04-2050 23:59:59"
+                pais: "Chile"
+                region: "Antofagasta"
+                ciudad: "Antofagasta"
+                comuna: "Antofagasta"
+                nombreCalle: "Balmaceda"
+                numeroCalle: "2648"
+                numeroBlock: "1"
+                prestadoresAsociados: null
+        data:
+          type: string
+          example: null
+          description: data devuelta en formato array
+        accessInfo:
+          type: string
+          description: accessInfo generalmente no trae información
+          example: null
+
+    medicalFacility: 
+      type: object
+      description: objeto respuesta medicalFacility
+      properties:
+        internalRolId:
+          type: integer
+          example: 1079170
+          description: rol ID
+        rut:
+          type: string
+          example: 99537800-0
+          description: rut de institución
+        razonSocial:
+          type: string
+          example: CLINICA PORTADA SPA
+          description: Razón social
+        luat:
+          type: string
+          example: 133
+          description: Código interno de lugar de atención. ejemplo 133 corresponde a Putre
+        tipoEstablecimiento:
+          type: string
+          example: Close_HealthCare
+          description: Tipo de Establecimiento
+        numRegistro:
+          type: string
+          example: 61
+          description: Numero de registro
+        vigenciaInicial:
+          type: string
+          format: date-time
+          example: 08-05-2023 00:00:00
+          description: Fecha de vigencia inicial
+        vigenciaFinal:
+          type: string
+          format: date-time
+          example: 31-12-2050 23:59:59
+          description: Fecha de vigencia final
+        pais:
+          type: string
+          example: Chile
+          description: Pais
+        region:
+          type: string
+          example: Antofagasta
+          description: region
+        ciudad:
+          type: string
+          example: Antofagasta
+          description: Ciudad
+        comuna:
+          type: string
+          example: Antofagasta
+          description: Comuna
+        nombreCalle:
+          type: string
+          example: Av. Balmaceda
+          description: nombre de calle
+        numeroCalle:
+          type: string
+          example: 2648
+          description: número de calle
+        numeroBlock:
+          type: string
+          example: 2
+          description: en caso de ser necesario número de block
+        prestadoresAsociados:
+          type: string
+          example: null
+          description: prestadores Asociados
+
+    AuthRequest:
+      description: Request de autenticación
+      type: object
+      properties:
+        userName:
+          type: string
+          example: "17656730-9"
+          description: usuario
+
+        password:
+          type: string
+          example: "17656730"
+          description: password
+
+
+    AuthResponse:
+      description: Respuesta de autenticación
+      type: object
+      properties:
+        access_token:
+          type: string
+          example: "lsdlñiwe7r903fnl.lksdfjkewhkfuhkfh348.kljsk"
+          description: Token tipo JWT
+        expire_in:
+          type: string
+          example: 86400
+          description: Fecha de expiración
+        message:
+          type: string
+          example: null
+          description: Mensaje de error en caso de ser necesario
+
+
+    AuthErrorResponse:
+      description: Response de error de autenticación
+      type: object
+      properties:
+        codigo:
+          type: string
+          example: invalid.user.or.password
+          description: Código del error
+        descripcion:
+          type: string
+          example: Usuari o contraseña incorrectos.
+          description: Descripción del error
+   
+    responsefindFilterError:
+      description: Respuesta de error de de responsefindFilterError
+      type: object
+      properties:
+        errorList:
+          type: object
+          properties:
+            systemErrorCode:
+              type: string
+              example: null
+              description: Código de erro de sistema
+            developerMessage:
+              type: string
+              example: null
+              description: Mensaje de desarrollo
+            userMessage:
+              type: string
+              example: Lo sentimos. No hemos logrado procesar su solicitud. Por favor contáctese con un administrador.
+              description: Mensaje de usuario
+            moreInfo:
+              type: string
+              example: null
+              description: Mas detalle e información
+
+
+    physicianFindByFilterResponse:
+      type: object
+      properties:
+        valido:
+          type: boolean
+          example: true
+          description: true si es valido false si no
+        codigo:
+          type: integer
+          example: 1
+          description: código
+        mensaje:
+          type: array
+          description: mensaje de proceso.
+          items:
+            type: string
+        datos:
+          type: string
+          example: null
+          description: datos en formato array de objetos
+        totalRegistros:
+          type: integer
+          example: 0
+          description: total de registros
+        data:
+          type: array
+          items:
+            type: string
+          description: data en formato array de objetos
+        accessInfo:
+          type: array
+          description: accessInfo generalmente no trae información
+          items:
+            type: string
+
+    findTariffsByFilterResponse:
+      type: object
+      properties:
+        valido:
+          type: boolean
+          example: true
+          description: true, siempre es true
+        codigo:
+          type: integer
+          example: 1
+          description: código 1
+        mensaje:
+          type: string
+          example: ok
+          description: mensaje de proceso. generalmente siempre es ok
+        totalRegistros:
+          type: integer
+          example: 1
+          description: total de registros
+        datos:
+          type: array
+          description: datos en formato array de objetos
+          items:
+            type: object
+            properties:
+              dimensionValueList:
+                type: array
+                description: Objeto tipo clave valor
+                items:
+                  type: object
+                  properties:
+                    typeNameImo:
+                      type: string
+                      example: XtbmlRange
+                      description: Metadata no considerar
+                    rangeIdentifierXtr:
+                      type: integer
+                      example: 18371
+                      description: Metadata no considerar
+                    rangeNameXtr:
+                      type: string
+                      example: codigoGrupoConvenio
+                      description: Nombre de la propiedad del objeto
+                    varcharValueXtr:
+                      type: string
+                      example: PVA-96.770.100-9_PREF
+                      description: Valor de la propiedad del objeto
+              fixedAmountXtv:
+                type: string
+                example: 25185.0
+                description: fixedAmountXtv *
+              creationDateXtv:
+                type: string
+                format: date-time
+                example: 01-01-2022 00:00:00
+                description: creationDateXtv
+              dateValueXtv:
+                type: string
+                example: PESO
+                description: dateValueXtv
+              id:
+                type: integer
+                description: id
+                example: 112637
+              
+        data:
+          type: string
+          example: null
+          description: data en formato array de objetos
+        accessInfo:
+          type: string
+          example: null
+          description: accessInfo generalmente no trae información
+
+    FindByFilterProviderResponse:
+      type: object
+      properties:
+        valido:
+          type: boolean
+          example: true
+          description: true si es valido false si no
+        codigo:
+          type: integer
+          example: 1
+          description: código
+        mensaje:
+          type: string
+          example: ok
+          description: mensaje de proceso.
+        totalRegistros:
+          type: integer
+          example: 1
+          description: total de registros
+        datos:
+          type: array
+          items:
+            type: object
+            properties:
+              typeNameImo:
+                type: string
+                example: ProviderAgreement
+              agreementBaseIdentifierAgb:
+                type: integer
+                example: 42777
+              basicDataCompleteCodeImo:
+                type: string
+                example: FULL
+              creationDateTimeImo:
+                type: string
+                format: date-time
+                example: 24-05-2022 12:45:28
+              creationUserImo:
+                type: string
+                example: System
+              keyImo:
+                type: string
+                example: null
+              updateDateTimeImo:
+                type: string
+                format: date-time
+                example: 27-04-2022 14:08:17
+              updateUserImo:
+                type: string
+                example: System
+              agreementBaseKindAgb:
+                type: string
+                example: AGREEMENT
+              nameAgb:
+                type: string
+                example: Clinica Alemana
+              issueDateAgb:
+                type: string
+                example: null
+              statusAgb:
+                type: object
+                properties:
+                  typeNameImo:
+                    type: string
+                    example: AgreementBaseStatus
+                  statusIdentifierSta:
+                    type: integer
+                    example: 88730
+                  basicDataCompleteCodeImo:
+                    type: string
+                    example: FULL
+                  creationDateTimeImo:
+                    type: string
+                    format: date-time
+                    example: 24-05-2022 12:45:28
+                  creationUserImo:
+                    type: string
+                    example: System
+                  keyImo:
+                    type: string
+                    example: null
+                  updateDateTimeImo:
+                    type: string
+                    format: date-time
+                    example: 27-04-2022 14:08:17
+                  updateUserImo:
+                    type: string
+                    example: System
+                  statusKindSta:
+                    type: string
+                    example: AGREEMENT_BASE_STATUS
+                  effectiveDateTimeSta:
+                    type: string
+                    format: date-time
+                    example: 27-04-2022 14:08:17
+                  nameSta:
+                    type: string
+                    example: Inicial
+                  reasonSta:
+                    type: string
+                    example: null
+                  agreementBaseStatusKindAbs:
+                    type: string
+                    example: null
+                  codeAbs:
+                    type: string
+                    example: INITIAL
+                  reasonCodeAbs:
+                    type: string
+                    example: null
+              descriptionAgb:
+                type: string
+                example: Convenio Clinica Alemana
+              identifierAgb:
+                type: string
+                example: PVA-96.770.100-9_PREF
+              purposeCodeAgb:
+                type: string
+                example: MEDICAL_PROVISION
+              originalInceptionDateAgb:
+                type: string
+                example: null
+              versionAgb:
+                type: string
+                example: null
+              taxQualificationCodeAgb:
+                type: string
+                example: null               
+              effectivePeriodStartDateTimeAgb:
+                type: string
+                format: date-time
+                example: 01-03-2022 00:00:00
+              effectivePeriodEndDateTimeAgb:
+                type: string
+                format: date-time
+                example: 01-03-2022 00:00:00
+              isBasedOnSpecificationAgb:
+                type: string
+                example: null
+              includedAgreementComponentAgb:
+                type: string
+                example: null
+              providedFinancialProvisionAgb:
+                type: string
+                example: null
+              referencedAgreementBaseAgb:
+                type: string
+                example: null
+              includedPartyRoleInAgreementAgb:
+                type: string
+                example: null
+              currencyExternalCodeAgb:
+                type: string
+                example: null
+              productPathAgb:
+                type: string
+                example: Preferente
+              agreementKindAgr:
+                type: string
+                example: PROVIDER_AGREEMENT
+              includingAgreementAgr:
+                type: string
+                example: null
+              integratedAgreementAgr:
+                type: string
+                example: null
+              integratingAgreementAgr:
+                type: string
+                example: null
+              includedAgreementAgr:
+                type: string
+                example: null
+              underlyingAgreementAgr:
+                type: string
+                example: null
+              payingAgreementAgr:
+                type: string
+                example: null
+              paidAgreementAgr:
+                type: string
+                example: null
+              isIncludedInPra:
+                type: string
+                example: null
+              includesPra:
+                type: string
+                example: null
+              involvedSpecificationPra:
+                type: string
+                example: null
+              involvedPlanIdPra:
+                type: array
+                items:
+                  type: string
+        data:
+          type: string
+          example: null
+        accessInfo:
+          type: string
+          example: null
+          description: accessInfo generalmente no trae información
+
+
+    codigoPrestacionResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/itemPrestaciones"
+
+    itemPrestaciones:
+      type: object
+      properties:
+        codigoPrestacion:
+          type: string
+          example: 2502023
+          description: Código de Prestación
+        descripcion:
+          type: string
+          example: Reparación Prenatal de Espina Bífida
+          description: descripción de prestación
+
+    bencertifResponse:
+      type: object
+      properties:
+        ApellidoPat:
+          type: string
+          example: ""
+          description: Apellido Paterno
+        ApellidoMat:
+          type: string
+          example: ""
+          description: Apellido Materno
+        Nombres:
+          type: string
+          example: ""
+          description: Nombres
+        Sexo:
+          type: string
+          example: ""
+          description: Sexo
+        FechaNacimi:
+          type: string
+          example: ""
+          description: Fecha de Nacimiento
+        CodEstBen:
+          type: string
+          description: Codigo de estado de beneficiario
+          example: ""
+        DescEstado:
+          type: string
+          example: ERROR AL EJECUTAR SERVICIO}
+          description: DescEstado
+        RutCotizante:
+          type: string
+          example: ""
+          description: Rut del cotizante
+        NomCotizante:
+          type: string
+          example: ""
+          description: Nombre del cotizante
+        DirPaciente:
+          type: string
+          example: ""
+          description: Dirección de paciente.
+        GlosaComuna:
+          type: string
+          example: ""
+          description: Golsa Comuna
+        GlosaCiudad:
+          type: string
+          example: ""
+          description: Glosa Ciudad
+        Prevision:
+          type: string
+          example: ""
+          description: Prevision
+        Plan:
+          type: string
+          example: ""
+          description: Plan
+        Glosa:
+          type: string
+          example: ERROR AL EJECUTAR SERVICIO :For input string
+          description: Glosa
+        DescuentoxPlanilla:
+          type: string
+          example: ""
+          description: Descuento por planilla
+        MontoExcedente:
+          type: string
+          example: ""
+          description: Monto excedente
+        Acompanantes:
+          type: array
+          items:
+            properties:
+              RutAcompanante:
+                type: string
+                example: ""
+                description: Rut acompanante.
+              NombreAcompanante:
+                type: string
+                example: ""
+                description: Nombre acompanante.
+
+
+    physicianFindByFilterRequest:
+      type: object
+      properties:
+        rut:
+          type: string
+          example: ""
+          description: Rut
+        luat:
+          type: string
+          example: null
+          description: Código interno de lugar de atención. ejemplo 133 corresponde a Putre
+        comuna:
+          type: string
+          example: null
+          description: Comuna
+        cargarAsociados:
+          type: boolean
+          example: false
+          description: Cargar Asociados
+
+    FindByFilterRequest:
+      type: object
+      properties:
+        rut:
+          type: string
+          example: "17656730-9"
+          description: rut para filtro
+        comuna:
+          type: string
+          example: null
+          description: comuna para filtro
+        cargarAsociados:
+          type: boolean
+          example: false
+
+    findTariffsByFilter:
+      type: object
+      properties:
+        nombreTable:
+          type: string
+          example: ArancelConvenio01
+        codigoConvenio:
+          type: string
+          example: PVA-96.770.100-9_PREF
+          description: codigo de convenio
+        codigoPrestacion:
+          type: string
+          example: 0303006
+          description: codigo de prestación
+        tipoPrestacion:
+          type: string
+          example: AMB
+          description: tipo de prestación
+        horario:
+          type: string
+          example: H
+          description: horario
+        fechaVigencia:
+          type: string
+          example: 01-03-2022 00:00:00
+          description: fecha de vigencia
+        tecnica:
+          type: string
+          example: null
+          description: técnica
+        codigoItemPrestacion:
+          type: string
+          example: null
+          description: codigo Item prestación
+        codigoAdicional:
+          type: string
+          example: null
+          description: codigo adicional
+
+    FindByFilterProviderRequest:
+      type: object
+      properties:
+        rut:
+          type: string
+          example: "17656730-9"
+          description: rut
+        luat:
+          type: string
+          example: 1
+          description: Código interno de lugar de atención. ejemplo 133 corresponde a Putre
+        date:
+          type: string
+          example:
+          description: fecha
+
+    valorvariResponse:
+      type: object
+      properties:
+        CodRespuesta:
+          type: string
+          example: S
+          description: Codigo de respuesta.
+        MensajeError:
+          type: string
+          example: ""
+          description: Mensaje de error.
+        Plan:
+          type: string
+          example: Esencial 70H60A
+          description: Plan de Isapre
+        Glosa1:
+          type: string
+          example: ""
+          description: Glosa1
+        Glosa2:
+          type: string
+          example: ""
+          description: Glosa2
+        Glosa3:
+          type: string
+          example: ""
+          description: Glosa3
+        Glosa4:
+          type: string
+          example: ""
+          description: Glosa4
+        Glosa5:
+          type: string
+          example: ""
+          description: Glosa5
+        Prestaciones:
+          type: array
+          items:
+            properties:
+              Prestacion:
+                type: string
+                example: 0000309022
+              Item:
+                type: string
+                example: 0
+              CodigoAdicional:
+                type: string
+                example: 810630
+              RecargoHora:
+                type: string
+                example: N
+              Cantidad:
+                type: string
+                example: 01
+              Total:
+                type: string
+                example: 14009
+              ValorPrestacion:
+                type: string
+                example: 14009
+              AporteFinanciador:
+                type: string
+                example: 8405
+              Copago:
+                type: string
+                example: 5604
+              InternoIsa:
+                type: string
+                example: 93757
+              BonificacionAdicional:
+                type: array
+                items:
+                  properties:
+                    TipoBonificacion:
+                      type: string
+                      example: 0
+                    MontoBonificacion:
+                      type: string
+                      example: 0
+
+    valorvariRequest:
+      type: object
+      properties:
+        CodFinanciador:
+          type: string
+          example: 108
+        RutBeneficiario:
+          type: string
+          example: 00015061273-K
+        HomNumeroConvenio:
+          type: string
+          example: 00000042095-000
+        HomLugarConvenio:
+          type: string
+          example: 001
+        SucVenta:
+          type: string
+          example: 30000
+        RutConvenio:
+          type: string
+          example: 0096770100-9
+        RutTratante:
+          type: string
+          example: 0007412546-8
+        Especialidad:
+          type: string
+          example: 0
+        RutSolicitante:
+          type: string
+          example: 00015061273-K
+        Tratamiento:
+          type: string
+          example: N
+        CodigoDiagnostico:
+          type: string
+        NivelConvenio:
+          type: string
+          example: 0
+        Urgencia:
+          type: string
+          example: N
+        NumPrestaciones:
+          type: string
+          example: 1
+        Prestaciones:
+          type: array
+          items:
+            $ref: "#/components/schemas/Prestaciones"
+            
+    Prestaciones:
+      type: object
+      properties:
+        Prestacion:
+          type: string
+          example: 0000309022
+        item:
+          type: string
+          example: 0-K
+        CodigoAdicional:
+          type: string
+          example: 810630
+        RecargoHora:
+          type: string
+          example: N
+        Cantidad:
+          type: string
+          example: 01
+        Total:
+          type: string
+          example: 000000000000
+
+    bencertifRequest:
+      type: object
+      properties:
+        CodFinanciador:
+          type: string
+          example: 108
+        RutBeneficiario:
+          type: string
+          example:
+        FechaActual:
+          type: string
+          example:
+
+    solicfoliosRequest:
+      type: object
+      properties:
+        CodFinanciador:
+          type: string
+          example: 108
+        NumFolios:
+          type: string
+          example: 3
+    
+    solicfoliosResponseOK:
+      type: object
+      properties:
+        CodRespuesta:
+          type: string
+          example: S
+        MensajeError:
+          type: string
+          example: OK
+        Folios:
+          type: string
+          example: 69534,69535,69536
+
+    valtransRequest:
+      type: object
+      properties:
+        CodFinanciador:
+          type: string
+          example: 108
+        FolioFinanciador:
+          type: string
+          example: 957
+        Accion:
+          type: string
+          example:
+        Pregunta:
+          type: string
+          example:
+
+    valtransResponseOK:
+      type: object
+      properties:
+        CodRespuesta:
+          type: string
+          example: N
+          description: codigo de respuesta
+        MensajeError:
+          type: string
+          example: Accion/Pregunta no encontrada
+          description: mensaje de error
+        Respuesta:
+          type: string
+          example: N
+          description: respuesta
+
+    anulabonouRequest:
+      type: object
+      properties:
+        CodFinanciador:
+          type: string
+          example: 108
+          description: codigo de financiador
+        FolioFinanciador:
+          type: string
+          example: 957
+          description: folio de financiador
+        IndTratam:
+          type: string
+          example: ""
+        FecTratam:
+          type: string
+          example: ""
+          description: fecha de tratamiento
+
+    anulabonouResponseOK:
+      type: object
+      properties:
+        CodRespuesta:
+          type: string
+          example: S
+          description: codigo de respuesta
+        MensajeError:
+          type: string
+          example: ""
+          description: mensaje de error
+
+    createBankRequest:
+      type: object
+      properties:
+        user:
+          type: string
+          example: 16000000-7
+        keyImoParty:
+          type: string
+          example: 16000000-7
+        bankAccountInfo:
+          type: object
+          properties:
+            accountNumber:
+              type: string
+              example: 5715442
+            accountTypeCode:
+              type: string
+              example: OTHER
+            bankCode:
+              type: string
+              example: 504
+
+    createBankResponseOK:
+      type: object
+      properties:
+        codigo:
+          type: string
+          example: uncontrolled.error
+          description: codigo de respuesta
+        descripcion:
+          type: string
+          example: Error no controlado.
+          description: descripcion de operación
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
