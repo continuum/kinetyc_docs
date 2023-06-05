@@ -8,8 +8,8 @@ info:
     - Estos servicios se probaran en ambiente QA
 
   license:
-    name: Apache 2.0 License
-    url: "https://www.apache.org/licenses/LICENSE-2.0"
+    name: MIT License
+    url: "https://www.mit.edu/~amini/LICENSE.md"
 
 servers:
   - url: https://core-svc-qa.somosesencial.cl # QA

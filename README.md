@@ -1,1 +1,1 @@
-Repositorio para documentacion Swagger de Servicios REST Kinetyc
+Repositorio para documentación Swagger de Servicios REST Kinetyc
